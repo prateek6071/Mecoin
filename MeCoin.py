@@ -1,11 +1,3 @@
-# Module 2 - Create a Cryptocurrency
-
-# To be installed:
-# Flask==0.12.2: pip install Flask==0.12.2
-# Postman HTTP Client: https://www.getpostman.com/
-# requests==2.18.4: pip install requests==2.18.4
-
-# Importing the libraries
 import datetime
 import hashlib
 import json
@@ -14,7 +6,6 @@ import requests
 from uuid import uuid4
 from urllib.parse import urlparse
 
-# Part 1 - Building a Blockchain
 
 class Blockchain:
 
@@ -96,18 +87,18 @@ class Blockchain:
             return True
         return False
 
-# Part 2 - Mining our Blockchain
 
-# Creating a Web App
+
+
 app = Flask(__name__)
 
-# Creating an address for the node on Port 5000
+
 node_address = str(uuid4()).replace('-', '')
 
-# Creating a Blockchain
+
 blockchain = Blockchain()
 
-# Mining a new block
+
 @app.route('/mine_block', methods = ['GET'])
 def mine_block():
     previous_block = blockchain.get_previous_block()
@@ -141,7 +132,7 @@ def is_valid():
         response = {'message': 'Houston, we have a problem. The Blockchain is not valid.'}
     return jsonify(response), 200
 
-# Adding a new transaction to the Blockchain
+
 @app.route('/add_transaction', methods = ['POST'])
 def add_transaction():
     json = request.get_json()
@@ -152,7 +143,7 @@ def add_transaction():
     response = {'message': f'This transaction will be added to Block {index}'}
     return jsonify(response), 201
 
-# Part 3 - Decentralizing our Blockchain
+
 
 # Connecting new nodes
 @app.route('/connect_node', methods = ['POST'])
@@ -167,7 +158,7 @@ def connect_node():
                 'total_nodes': list(blockchain.nodes)}
     return jsonify(response), 201
 
-# Replacing the chain by the longest chain if needed
+
 @app.route('/replace_chain', methods = ['GET'])
 def replace_chain():
     is_chain_replaced = blockchain.replace_chain()
@@ -179,5 +170,5 @@ def replace_chain():
                     'actual_chain': blockchain.chain}
     return jsonify(response), 200
 
-# Running the app
+
 app.run(host = '0.0.0.0', port = 5000)
